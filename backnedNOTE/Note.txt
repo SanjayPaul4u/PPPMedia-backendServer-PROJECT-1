@@ -12,3 +12,8 @@
     - mongoose.connect("mongodb://127.0.0.1:27017/PPPMedia")...
 
 
+4. Model and Schema Create
+    -for photo, title uploading
+    -for user
+
+
