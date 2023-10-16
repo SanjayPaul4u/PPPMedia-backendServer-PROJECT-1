@@ -1,6 +1,13 @@
 const Users = require("../models/userModel");
+const { body, validationResult } = require('express-validator');
 // signUpFunc
 const signUpFunc = async(req, res, next)=>{
+    // added "express-validator" validation
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.status(400).json({errors: result.array()});
+    }
+    
     // email already exists //todo
     try {
         const signup_data = new Users({
@@ -21,6 +28,11 @@ const signUpFunc = async(req, res, next)=>{
 }
 // loginFunc
 const loginFunc = async(req, res, next)=>{
+    // added "express-validator" validation
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.status(400).json({errors: result.array()});
+    }
     try {
         const ui_password = req.body.password;
         const ui_email = req.body.email

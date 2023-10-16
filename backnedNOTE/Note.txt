@@ -28,3 +28,18 @@
     - authentication TODO📌
     - json web token  TODO📌
 
+7. Validation adding in above api 🟢✔
+    - use express-validator
+
+    --- const { body, validationResult } = require('express-validator');
+    --- [
+    body("email", "It couldn't be email*****").isEmail(),
+    body("password", "Minimum Length should be 3*****").isLength({min:3}),
+    body("password", "Maximum Length should be 20*****").isLength({max:20})
+    ]
+
+    --- const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.status(400).json({errors: result.array()});
+    }
+

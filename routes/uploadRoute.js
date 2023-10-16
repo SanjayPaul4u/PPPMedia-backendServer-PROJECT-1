@@ -1,13 +1,18 @@
 const express  = require('express');
 const upload = require("../photosFileHelper/fileHelper");
 const {uploadImageFunc, getAllImagesFunc} = require("../controller/uploadController");
+const { body, validationResult } = require('express-validator');
+
 // CREATE ROUTER
 const router = express.Router();
 
 // ROUTING
 
 // ROUTE 1: POST - /api/upload/uploadimg (ATHENTICATION REQUIRE)
-router.post("/uploadimg", upload.array("files"), uploadImageFunc);
+router.post("/uploadimg", upload.array("files"), [
+    body("title", "Minimum Length of title should be 3*****").isLength({min:3}),
+    body("title", "Maximum Length of title should be 100*****").isLength({max:100})
+    ], uploadImageFunc);
 
 // ROUTE 1: POST - /api/upload/getallimages (ATHENTICATION REQUIRE)
 router.get("/getallimages",  getAllImagesFunc);

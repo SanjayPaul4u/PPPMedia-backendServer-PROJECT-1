@@ -1,8 +1,16 @@
 const UserPhotos = require("../models/multiplePhotosModel");
 const fs = require('fs');
+const { body, validationResult } = require('express-validator');
 
 // uploadImageFunc🧡🧡
 const uploadImageFunc = async(req, res, next)=>{
+     // added "express-validator" validation
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.status(400).json({errors: result.array()});
+    }
+
+
     try {
         file_array = [],
 

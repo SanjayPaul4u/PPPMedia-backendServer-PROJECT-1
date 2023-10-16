@@ -12,7 +12,10 @@ const userSchema = new mongoose.Schema({
         unique: true         
     },
     age: {
-        type: Number
+        type: Number,
+        require: true,
+        min: [1, "Minimum age should be 1"],
+        max: [100, "Maximum age should be 100"]
     },
     password:{
         type: String,
