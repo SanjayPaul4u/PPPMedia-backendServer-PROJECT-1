@@ -26,6 +26,6 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 // MODEL CREATE
-const users = new mongoose.model("user", userSchema);
+const Users = new mongoose.model("user", userSchema);
 
-module.exports = users;
+module.exports = Users;

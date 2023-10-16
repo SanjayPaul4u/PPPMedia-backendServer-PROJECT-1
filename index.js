@@ -12,9 +12,9 @@ const host  = "127.0.0.1";
 const port = 7000;
 
 // ROUTING
-app.use("/auth", authRouter);
-app.use("/other", otherRouter);
-app.use("/upload", uploadRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/other", otherRouter);
+app.use("/api/upload", uploadRouter);
 
 // LISTEN SERVER
 app.listen(port, host, ()=>{

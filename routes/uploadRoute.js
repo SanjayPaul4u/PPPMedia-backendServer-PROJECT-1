@@ -1,12 +1,13 @@
 const express  = require('express');
-
+const upload = require("../photosFileHelper/fileHelper");
+const {uploadImageFunc} = require("../controller/uploadController");
 // CREATE ROUTER
 const router = express.Router();
 
 // ROUTING
-router.get("/", (req, res)=>{
-    res.send("This is home page by upload router");
-})
+
+// ROUTE 1: POST - /api/upload/uploadimg
+router.post("/uploadimg", upload.array("files"), uploadImageFunc);
 
 // EXPORT ROUTER
 module.exports = router;

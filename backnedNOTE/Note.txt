@@ -12,8 +12,12 @@
     - mongoose.connect("mongodb://127.0.0.1:27017/PPPMedia")...
 
 
-4. Model and Schema Create
+4. Model and Schema Create 🟢✔
     -for photo, title uploading
     -for user
 
+5. REST API create for - title and photos uploading() 🟢✔
+        use "npm i multer"
+        use fs
+   
 
