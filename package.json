@@ -1,0 +1,21 @@
+{
+  "name": "pppmedia",
+  "version": "1.0.0",
+  "description": "PPP Media is a application where you can  share your photos, achivment and you can watch others's photo and achivemnt also. PPP Media is a social media application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js"
+  },
+  "keywords": [
+    "It",
+    "will",
+    "be",
+    "awesome"
+  ],
+  "author": "sanjoy paul",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
