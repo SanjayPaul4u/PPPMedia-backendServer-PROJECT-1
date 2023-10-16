@@ -2,6 +2,7 @@ const express = require('express');
 const authRouter = require('./routes/authRoute');
 const uploadRouter = require('./routes/uploadRoute');
 const otherRouter = require('./routes/otherRoute');
+require('./database');
 
 // CREATE EXPRESS APP
 const app = express();
