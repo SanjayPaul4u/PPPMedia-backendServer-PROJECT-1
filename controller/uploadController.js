@@ -38,6 +38,20 @@ const uploadImageFunc = async(req, res, next)=>{
     }
 }
 
+// getImagesFunc 🧡🧡
+const getAllImagesFunc = async(req, res, next)=>{
+    try {
+        const all_Images =await UserPhotos.find().sort({createdAt: -1});
+        console.log(all_Images);
+        res.status(200).send(all_Images);
+
+    } catch (error) {
+        console.log("getImagesFunc error**************");
+        console.log(error);
+        res.status(500).send(error);
+    }
+}
+
 // fileSizeformatter
 const fileSizeformatter = (bytes, decimal)=>{
     if(bytes===0){
@@ -50,5 +64,6 @@ const fileSizeformatter = (bytes, decimal)=>{
     return parseFloat((bytes/ Math.pow(1000, index)).toFixed(dm)) +' '+sizes[index];
 }
 module.exports = {
-    uploadImageFunc
+    uploadImageFunc,
+    getAllImagesFunc
 }

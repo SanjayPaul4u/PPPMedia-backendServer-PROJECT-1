@@ -7,6 +7,9 @@ require('./database');
 // CREATE EXPRESS APP
 const app = express();
 
+// MIDLE WARE
+app.use(express.json());
+
 // DEFINE
 const host  = "127.0.0.1";
 const port = 7000;

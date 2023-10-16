@@ -16,8 +16,15 @@
     -for photo, title uploading
     -for user
 
-5. REST API create for - title and photos uploading() 🟢✔
+5. REST API create for - title and photos uploading(uploadimg, getallimages) 🟢✔🟢✔
         use "npm i multer"
         use fs
-   
+
+
+6. REST API create for 'signup', 'login' and 'getuser'🟢✔
+    - app.use(express.json());
+    - urluncoded
+    - validation TODO📌
+    - authentication TODO📌
+    - json web token  TODO📌
 
