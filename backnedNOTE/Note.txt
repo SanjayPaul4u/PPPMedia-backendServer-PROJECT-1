@@ -1,3 +1,9 @@
-1. Simple express app making 
+1. Simple express app making 🟢✔
     - npm init
     - npm i express
+
+2. Router Create 🟢✔
+    - const router = express.Router();
+    - then export
+    - app.use("/auth", authRouter);
+
