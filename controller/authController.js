@@ -7,18 +7,21 @@ const jwt_secret = "thisissecrettextforjsonwebtoken";
 // signUpFunc
 // _______________
 const signUpFunc = async(req, res, next)=>{
+    let success = false;
     
     // added "express-validator" validation
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        return res.status(400).json({errors: result.array()});
+        success = false;
+        return res.status(400).json({success, error: result.array()});
     }
     
     try {
         // Cheking email already exists or not
         const emailCheck = await Users.findOne({email: req.body.email});
         if(emailCheck){
-            return res.status(400).send("A User with this Email already exists****");
+            success = false;
+            return res.status(400).json({success, error: "A User with this Email already exists****"});
         }
 
         // if both password same
@@ -45,14 +48,16 @@ const signUpFunc = async(req, res, next)=>{
         }
         const token = await jwt.sign(data, jwt_secret);
 
-        res.status(201).json({message:"Account Created successfully***", token,savedData});
+        success = true;
+        res.status(201).json({success, message:"Account Created successfully***", token,savedData});
         }else{
             res.status(400).json({error: "Your both passwords are not matched"});
         }
     } catch (error) {
+        success = false;
         console.log("sign up error****");
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).json({success, error:error.message});
     }
 }
 
@@ -61,10 +66,14 @@ const signUpFunc = async(req, res, next)=>{
 // _____________
 
 const loginFunc = async(req, res, next)=>{
+    let success = false;
+
+
     // added "express-validator" validation
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        return res.status(400).json({errors: result.array()});
+        success = false;
+        return res.status(400).json({success, error: result.array()});
     }
 
     try {
@@ -74,7 +83,8 @@ const loginFunc = async(req, res, next)=>{
         // IS EMAIL MATCHING OR NOT
         const email_check = await Users.findOne({email: ui_email});
         if(!email_check){
-            return res.status(404).send("Invalid Credentials (email)")
+            success = false;
+            return res.status(404).json({success, error:"Invalid Credentials (email)"})
         }
 
         // IS PASSWORD MATCHING OR NOT by bcrypt compare
@@ -87,32 +97,40 @@ const loginFunc = async(req, res, next)=>{
                 }
             }
             const token = await jwt.sign(data, jwt_secret);
-            res.status(200).send({message: "logged In Success fully***", token, userData : email_check});
+            success = true;
+            res.status(200).json({success, message: "logged In Success fully***", token, userData : email_check});
         }else{
-            res.status(404).send("Invalid Credentials (password)")
+            success = false;
+            res.status(404).json({success, error:"Invalid Credentials (password)"})
         }
         
     } catch (error) {
-        console.log("sign up error****");
+        console.log("login error****");
         console.log(error);
-        res.status(500).send(error);
+        success = false;
+        res.status(500).json({success, error: error.message});
     }
 }
 
 
-// getUserFunc
+// getUserFunc- require AUTHENTICATION
+// ______________
 const getUserFunc = async(req, res, next)=>{
+    let success = false;
     try {
         const userId = req.user.id;
         const userData = await Users.findById(userId).select("-password");
         if(userData === null){
-            return res.status(404).send("User not Found");
+            success = false;
+            return res.status(404).json({success, error:"User not Found"});
         }
-        res.status(200).send(userData);
+        success = true;
+        res.status(200).json({success, userData});
     } catch (error) {
+        success = false;
         console.log("get user error****");
         console.log(error);
-        res.status(500).send(error.message);
+        res.status(500).json({success, error:error.message});
     }
 }
 module.exports = {signUpFunc, loginFunc, getUserFunc};

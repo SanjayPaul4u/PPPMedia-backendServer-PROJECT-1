@@ -2,12 +2,16 @@ const UserPhotos = require("../models/multiplePhotosModel");
 const fs = require('fs');
 const { body, validationResult } = require('express-validator');
 
-// uploadImageFunc🧡🧡
+// uploadImageFunc🧡🧡 - require AUTHENTICATION
+//______________________________________________
 const uploadImageFunc = async(req, res, next)=>{
+    let success = false;
+
      // added "express-validator" validation
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        return res.status(400).json({errors: result.array()});
+        success = false;
+        return res.status(400).json({success, errors: result.array()});
     }
 
 
@@ -39,25 +43,32 @@ const uploadImageFunc = async(req, res, next)=>{
         // SAVE DATA IN MONGODB ON 'UserPhotos' collection
         const saveData = await uploadData.save();
 
-        res.status(201).send("File uploaded success fully");
+        success = true;
+        res.status(201).json({success, message:"File uploaded success fully"});
     } catch (error) {
+        success = false;
         console.log("uploadImageFunc error*****************");
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).json({success ,error:error.message});
     }
 }
 
-// getImagesFunc 🧡🧡
+// getImagesFunc 🧡🧡 - require AUTHENTICATION
+// _______________________
 const getAllImagesFunc = async(req, res, next)=>{
+    let success = false;
+
     try {
         const all_Images =await UserPhotos.find().sort({createdAt: -1});
         // console.log(all_Images);
-        res.status(200).send(all_Images);
+        success = true;
+        res.status(200).json({success, all_Images});
 
     } catch (error) {
+        success = false;
         console.log("getImagesFunc error**************");
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).json({success, error:error.message});
     }
 }
 

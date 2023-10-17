@@ -55,5 +55,7 @@
     - npm i jsonwebtoken
     - const token = await jwt.sign(data, jwt_secret)
     - const verifyToken = await jwt.verify(token, jwt_secret);
+
+10. Added success variable in all REST API 🟢✔
     
 
