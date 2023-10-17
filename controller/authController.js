@@ -1,6 +1,8 @@
 const Users = require("../models/userModel");
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
+const jwt_secret = "thisissecrettextforjsonwebtoken";
 
 // signUpFunc
 // _______________
@@ -35,7 +37,15 @@ const signUpFunc = async(req, res, next)=>{
         console.log(signup_data);
         const savedData = await signup_data.save();
 
-        res.status(201).send(savedData);
+        //Generate token
+        const data = {
+            user: {
+                id: savedData._id
+            }
+        }
+        const token = await jwt.sign(data, jwt_secret);
+
+        res.status(201).json({message:"Account Created successfully***", token,savedData});
         }else{
             res.status(400).json({error: "Your both passwords are not matched"});
         }
@@ -70,12 +80,18 @@ const loginFunc = async(req, res, next)=>{
         // IS PASSWORD MATCHING OR NOT by bcrypt compare
         const compare_password = await bcrypt.compare(ui_password, email_check.password)
         if(compare_password){
-            res.status(200).send({message: "logged In Success fully", userData : email_check});
+            //Generate token
+            const data = {
+                user: {
+                    id: email_check._id
+                }
+            }
+            const token = await jwt.sign(data, jwt_secret);
+            res.status(200).send({message: "logged In Success fully***", token, userData : email_check});
         }else{
             res.status(404).send("Invalid Credentials (password)")
         }
         
-        // res.status(200).send(savedData);
     } catch (error) {
         console.log("sign up error****");
         console.log(error);
@@ -87,8 +103,8 @@ const loginFunc = async(req, res, next)=>{
 // getUserFunc
 const getUserFunc = async(req, res, next)=>{
     try {
-        const paramId = req.params.id
-        const userData = await Users.findById(paramId);
+        const userId = req.user.id;
+        const userData = await Users.findById(userId).select("-password");
         if(userData === null){
             return res.status(404).send("User not Found");
         }

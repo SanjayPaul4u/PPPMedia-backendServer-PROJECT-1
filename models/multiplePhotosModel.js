@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 // SCHEMA CREATE
 const uploadSchema = new mongoose.Schema({
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
+    },
     title: {
         type: String,
         require: true

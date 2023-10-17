@@ -49,3 +49,11 @@
     -const salt = await bcrypt.genSalt(10);
     -this.password = await bcrypt.hash(this.password, salt);
 
+
+9. Generate token by 'json web token' 🟢✔
+    - Added middleware
+    - npm i jsonwebtoken
+    - const token = await jwt.sign(data, jwt_secret)
+    - const verifyToken = await jwt.verify(token, jwt_secret);
+    
+
