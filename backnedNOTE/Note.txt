@@ -43,3 +43,9 @@
         return res.status(400).json({errors: result.array()});
     }
 
+
+8. Created password as Secure password by "bcryptjs" 🟢✔
+
+    -const salt = await bcrypt.genSalt(10);
+    -this.password = await bcrypt.hash(this.password, salt);
+
