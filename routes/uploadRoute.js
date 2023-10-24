@@ -16,7 +16,7 @@ router.post("/uploadimg", upload.array("files"), [
     ], fetchUser, uploadImageFunc);
 
 // ROUTE 1: POST - /api/upload/getallimages (ATHENTICATION REQUIRE)
-router.get("/getallimages",  getAllImagesFunc);
+router.get("/getallimages", fetchUser, getAllImagesFunc);
 
 // EXPORT ROUTER
 module.exports = router;

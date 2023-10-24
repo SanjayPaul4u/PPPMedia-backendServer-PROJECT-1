@@ -2,6 +2,7 @@ const express = require('express');
 const authRouter = require('./routes/authRoute');
 const uploadRouter = require('./routes/uploadRoute');
 const otherRouter = require('./routes/otherRoute');
+const cors = require('cors');
 require('./database');
 
 // CREATE EXPRESS APP
@@ -9,10 +10,12 @@ const app = express();
 
 // MIDLE WARE
 app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({extended:false}));
 
 // DEFINE
 const host  = "127.0.0.1";
-const port = 7000;
+const port = process.env.PORT || 7000;
 
 // ROUTING
 app.use("/api/auth", authRouter);
