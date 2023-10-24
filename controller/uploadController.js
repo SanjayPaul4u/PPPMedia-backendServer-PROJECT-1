@@ -53,11 +53,10 @@ const uploadImageFunc = async(req, res, next)=>{
     }
 }
 
-// getImagesFunc 🧡🧡 - require AUTHENTICATION
+// get all Images Function 🧡🧡 - require AUTHENTICATION
 // _______________________
 const getAllImagesFunc = async(req, res, next)=>{
-    let success = false;
-
+    let success = false;    
     try {
         const all_Images =await UserPhotos.find().sort({createdAt: -1});
         // console.log(all_Images);
@@ -70,6 +69,24 @@ const getAllImagesFunc = async(req, res, next)=>{
         console.log(error);
         res.status(500).json({success, error:error.message});
     }
+}
+// get User's Images Function 🧡🧡 - require AUTHENTICATION
+const getUserImagesFunc = async(req, res, next) =>{
+    let success = false;
+    try {
+        const user = req.user.id
+        const user_Images = await UserPhotos.find({user}).sort({createdAt: -1});
+        success = true;
+        console.log(user_Images);
+        res.status(200).json({success, user_Images});
+        
+    } catch (error) {
+        success = false;
+        console.log("getUserImagesFunc error**************");
+        console.log(error);
+        res.status(500).json({success, error:error.message});
+    }
+
 }
 
 // fileSizeformatter
@@ -85,5 +102,6 @@ const fileSizeformatter = (bytes, decimal)=>{
 }
 module.exports = {
     uploadImageFunc,
-    getAllImagesFunc
+    getAllImagesFunc,
+    getUserImagesFunc
 }

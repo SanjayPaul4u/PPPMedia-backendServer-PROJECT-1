@@ -59,3 +59,5 @@
 10. Added success variable in all REST API 🟢✔
     
 11. refactored 🟢✔
+
+12. '/getuserimages' api end point created 🟢✔

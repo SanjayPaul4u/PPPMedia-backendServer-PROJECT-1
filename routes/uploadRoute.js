@@ -1,6 +1,6 @@
 const express  = require('express');
 const upload = require("../photosFileHelper/fileHelper");
-const {uploadImageFunc, getAllImagesFunc} = require("../controller/uploadController");
+const {uploadImageFunc, getAllImagesFunc, getUserImagesFunc} = require("../controller/uploadController");
 const { body, validationResult } = require('express-validator');
 const fetchUser = require("../middleware/fetchUser");
 
@@ -15,8 +15,11 @@ router.post("/uploadimg", upload.array("files"), [
     body("title", "Maximum Length of title should be 100*****").isLength({max:100})
     ], fetchUser, uploadImageFunc);
 
-// ROUTE 1: POST - /api/upload/getallimages (ATHENTICATION REQUIRE)
+// ROUTE 2: GET - /api/upload/getallimages (ATHENTICATION REQUIRE)
 router.get("/getallimages", fetchUser, getAllImagesFunc);
+
+// ROUTE 3: GET - /api/upload/getuserimages (ATHENTICATION REQUIRE)
+router.get("/getuserimages", fetchUser, getUserImagesFunc);
 
 // EXPORT ROUTER
 module.exports = router;
