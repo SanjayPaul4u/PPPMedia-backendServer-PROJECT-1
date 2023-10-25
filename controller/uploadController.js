@@ -77,7 +77,7 @@ const getUserImagesFunc = async(req, res, next) =>{
         const user = req.user.id
         const user_Images = await UserPhotos.find({user}).sort({createdAt: -1});
         success = true;
-        console.log(user_Images);
+        // console.log(user_Images);
         res.status(200).json({success, user_Images});
         
     } catch (error) {

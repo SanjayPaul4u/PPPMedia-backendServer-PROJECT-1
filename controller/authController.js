@@ -37,9 +37,8 @@ const signUpFunc = async(req, res, next)=>{
         
         // createD Secure passwore here by "pre method" "userModel" (hashing password)*****
         
-        console.log(signup_data);
         const savedData = await signup_data.save();
-
+        
         //Generate token
         const data = {
             user: {
@@ -47,11 +46,13 @@ const signUpFunc = async(req, res, next)=>{
             }
         }
         const token = await jwt.sign(data, jwt_secret);
-
+        
         success = true;
+        console.log("Account Created successfully***********");
         res.status(201).json({success, message:"Account Created successfully***", token,savedData});
         }else{
-            res.status(400).json({error: "Your both passwords are not matched"});
+            success = false;
+            res.status(400).json({success, error: "Your both passwords are not matched"});
         }
     } catch (error) {
         success = false;
