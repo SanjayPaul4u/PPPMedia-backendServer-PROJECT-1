@@ -3,9 +3,11 @@ const upload = require("../photosFileHelper/fileHelper");
 const {uploadImageFunc, getAllImagesFunc, getUserImagesFunc} = require("../controller/uploadController");
 const { body, validationResult } = require('express-validator');
 const fetchUser = require("../middleware/fetchUser");
+const cookieParser = require("cookie-parser");
 
 // CREATE ROUTER
 const router = express.Router();
+router.use(cookieParser());
 
 // ROUTING
 

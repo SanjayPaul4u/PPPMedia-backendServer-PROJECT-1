@@ -36,20 +36,20 @@ const signUpFunc = async(req, res, next)=>{
         })
         
         // createD Secure passwore here by "pre method" "userModel" (hashing password)*****
-        
+
+        // generate toke by userSchema.methods.createToken
+        const mainToken = await signup_data.createToken();
+        res.cookie("jwt", mainToken, {
+            expires: new Date(Date.now()+1120000),
+            httpOnly: true
+        })  
+       
+
         const savedData = await signup_data.save();
-        
-        //Generate token
-        const data = {
-            user: {
-                id: savedData._id
-            }
-        }
-        const token = await jwt.sign(data, jwt_secret);
-        
+                
         success = true;
         console.log("Account Created successfully***********");
-        res.status(201).json({success, message:"Account Created successfully***", token,savedData});
+        res.status(201).json({success, message:"Account Created successfully***", token:mainToken,savedData});
         }else{
             success = false;
             res.status(400).json({success, error: "Your both passwords are not matched"});
@@ -89,17 +89,17 @@ const loginFunc = async(req, res, next)=>{
         }
 
         // IS PASSWORD MATCHING OR NOT by bcrypt compare
-        const compare_password = await bcrypt.compare(ui_password, email_check.password)
+        const compare_password = await bcrypt.compare(ui_password, email_check.password);
         if(compare_password){
-            //Generate token
-            const data = {
-                user: {
-                    id: email_check._id
-                }
-            }
-            const token = await jwt.sign(data, jwt_secret);
+            // generate toke by userSchema.methods.createToken
+            const mainToken = await email_check.createToken(); // "email_chck" have user's data
+            res.cookie('jwt', mainToken, {
+                expires: new Date(Date.now() + 1120000),
+                httpOnly:true
+            })
+
             success = true;
-            res.status(200).json({success, message: "logged In Success fully***", token, userData : email_check});
+            res.status(200).json({success, message: "logged In Success fully***", token:mainToken, userData : email_check});
         }else{
             success = false;
             res.status(404).json({success, error:"Invalid Credentials (password)"})
@@ -119,7 +119,8 @@ const loginFunc = async(req, res, next)=>{
 const getUserFunc = async(req, res, next)=>{
     let success = false;
     try {
-        const userId = req.user.id;
+        // console.log(req.user._id);
+        const userId = req.user._id;
         const userData = await Users.findById(userId).select("-password");
         if(userData === null){
             success = false;

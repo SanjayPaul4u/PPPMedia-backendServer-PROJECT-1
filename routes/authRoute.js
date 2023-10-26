@@ -2,9 +2,12 @@ const express  = require('express');
 const { body, validationResult } = require('express-validator');
 const {signUpFunc, loginFunc, getUserFunc} = require("../controller/authController");
 const fetchUser = require("../middleware/fetchUser");
+const cookieParser = require("cookie-parser");
+
 
 // CREATE ROUTER
 const router = express.Router();
+router.use(cookieParser());
 
 // ROUTING
 // ROUTE 1: POST - /api/auth/signup (NOT ATHENTICATION REQUIRE)

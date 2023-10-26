@@ -36,7 +36,7 @@ const uploadImageFunc = async(req, res, next)=>{
 
         // FINALLY ADDED TITLE AND 'PHOTOS FILE' ARRAY
         const uploadData = await UserPhotos({
-            user: req.user.id,
+            user: req.user._id,
             title : req.body.title,
             files: file_array
         })
@@ -74,7 +74,7 @@ const getAllImagesFunc = async(req, res, next)=>{
 const getUserImagesFunc = async(req, res, next) =>{
     let success = false;
     try {
-        const user = req.user.id
+        const user = req.user._id
         const user_Images = await UserPhotos.find({user}).sort({createdAt: -1});
         success = true;
         // console.log(user_Images);

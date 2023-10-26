@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
+
+// DEFINE
+const jwt_secret = "thisissecrettextforjsonwebtoken";
 
 // SCHEMA CREATE
 const userSchema = new mongoose.Schema({
@@ -28,6 +32,24 @@ const userSchema = new mongoose.Schema({
     }
 
 }, {timestamps: true});
+
+// Token Generate
+userSchema.methods.createToken = async function(){
+    try {
+        const data = {
+            user:{
+                id: this._id
+            }
+        }
+        const generateToken =await jwt.sign(data, jwt_secret);
+
+        await this.save();
+        return generateToken
+    } catch (error) {
+        console.log("CreateToken Error*****");
+        console.log(error);
+    }
+}
 
 // Created secure password by :"pre method"
 userSchema.pre("save", async function (next){

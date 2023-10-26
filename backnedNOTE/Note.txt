@@ -61,3 +61,16 @@
 11. refactored 🟢✔
 
 12. '/getuserimages' api end point created 🟢✔
+
+13. Refactored 🟢✔
+
+------------------------------------------------------------
+
+14. Store Token in Cookies 🟢✔
+    - const cookieParser = require('cookie-parser');***********
+    - router.use(cookieParser());*********IN EVERY ROUTER SHOULD USE
+    - res.cookie("jwt", mainToken, {
+            expires: new Date(Date.now()+120000),
+            httpOnly: true
+        })  
+15. Authenticate 'Token' which is Store in 'Cookie' 🟢✔
