@@ -74,3 +74,5 @@
             httpOnly: true
         })  
 15. Authenticate 'Token' which is Store in 'Cookie' 🟢✔
+
+16. Log out function created 🟢✔

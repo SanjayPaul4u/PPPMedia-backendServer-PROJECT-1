@@ -139,4 +139,18 @@ const getUserFunc = async(req, res, next)=>{
         res.status(500).json({success, error:error.message});
     }
 }
-module.exports = {signUpFunc, loginFunc, getUserFunc};
+
+// logOutFunc- require AUTHENTICATION
+const logOutFunc = async(req, res, next) =>{
+    try {
+        res.clearCookie('jwt');
+        success = true;
+        res.status(200).json({success, message:"Log Out successfully"});
+    } catch (error) {
+        success = false;
+        console.log("Logout error****");
+        console.log(error);
+        res.status(500).json({success, error:error.message});
+    }
+}
+module.exports = {signUpFunc, loginFunc, getUserFunc, logOutFunc};
