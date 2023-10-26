@@ -39,8 +39,10 @@ const signUpFunc = async(req, res, next)=>{
 
         // generate toke by userSchema.methods.createToken
         const mainToken = await signup_data.createToken();
+
+        // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
         res.cookie("jwt", mainToken, {
-            expires: new Date(Date.now()+1120000),
+            expires: new Date(Date.now()+600000),// 10 minute
             httpOnly: true
         })  
        
@@ -93,8 +95,10 @@ const loginFunc = async(req, res, next)=>{
         if(compare_password){
             // generate toke by userSchema.methods.createToken
             const mainToken = await email_check.createToken(); // "email_chck" have user's data
+
+            // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
             res.cookie('jwt', mainToken, {
-                expires: new Date(Date.now() + 1120000),
+                expires: new Date(Date.now() + 600000),// 10 minute
                 httpOnly:true
             })
 
