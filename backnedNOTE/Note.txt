@@ -64,7 +64,7 @@
 
 13. Refactored 🟢✔
 
-------------------------------------------------------------
+STEP------------------------------------------------------------
 
 14. Store Token in Cookies 🟢✔
     - const cookieParser = require('cookie-parser');***********
@@ -76,3 +76,8 @@
 15. Authenticate 'Token' which is Store in 'Cookie' 🟢✔
 
 16. Log out function created 🟢✔
+
+STEP--------------------------------------------------------------- 
+
+17. User Photo Update function - REST API - 🟢✔
+17. User Photo Delete function - REST API - 🟢✔

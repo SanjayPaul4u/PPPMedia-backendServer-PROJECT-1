@@ -1,6 +1,6 @@
 const express  = require('express');
 const upload = require("../photosFileHelper/fileHelper");
-const {uploadImageFunc, getAllImagesFunc, getUserImagesFunc} = require("../controller/uploadController");
+const {uploadImageFunc, getAllImagesFunc, getUserImagesFunc, updateUserImagesFunc, deleteUserImagesFunc} = require("../controller/uploadController");
 const { body, validationResult } = require('express-validator');
 const fetchUser = require("../middleware/fetchUser");
 const cookieParser = require("cookie-parser");
@@ -22,6 +22,12 @@ router.get("/getallimages", fetchUser, getAllImagesFunc);
 
 // ROUTE 3: GET - /api/upload/getuserimages (ATHENTICATION REQUIRE)
 router.get("/getuserimages", fetchUser, getUserImagesFunc);
+
+// ROUTE 4: POST - /api/upload/getuserimages/updateuserimg (ATHENTICATION REQUIRE)
+router.patch("/getuserimages/updateuserimg/:id", fetchUser, updateUserImagesFunc);
+
+// ROUTE 4: POST - /api/upload/getuserimages/deleteuserimg (ATHENTICATION REQUIRE)
+router.delete("/getuserimages/deleteuserimg/:id", fetchUser, deleteUserImagesFunc);
 
 // EXPORT ROUTER
 module.exports = router;

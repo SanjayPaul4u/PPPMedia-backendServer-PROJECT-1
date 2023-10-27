@@ -1,6 +1,7 @@
 const UserPhotos = require("../models/multiplePhotosModel");
 const fs = require('fs');
 const { body, validationResult } = require('express-validator');
+const { error } = require("console");
 
 // uploadImageFunc🧡🧡 - require AUTHENTICATION
 //______________________________________________
@@ -89,6 +90,73 @@ const getUserImagesFunc = async(req, res, next) =>{
 
 }
 
+// Upadate User's Photo  Functioni 🧡🧡 - require AUTHENTICATION
+// _______________________
+const updateUserImagesFunc = async(req, res, next)=>{
+    try {
+        let success =false;
+        let document = await UserPhotos.findById(req.params.id).select("-files");
+
+        if(!document){
+            success = false;
+            return res.status(401).json({success, error: "Not Found"});
+        }
+
+        // console.log(req.user._id);
+        // console.log(document.user); // we should convert both in string// they are objectId
+        if(document.user.toString() !== req.user._id.toString()){
+            success = false;
+            return res.status(400).json({success, error: "Not Allowed"});
+        }
+
+        const {title} = req.body;
+        const newTitle = {};
+
+        if(title){
+            newTitle.title = title
+        }
+
+        document = await UserPhotos.findByIdAndUpdate(req.params.id, {$set: newTitle}, {new: true})
+
+        success = true;
+        res.status(201).json({success, document})
+    } catch (error) {
+        console.log(error);
+        success = false;
+        res.status(500).json({success, error: error.message})
+
+    }   
+}
+
+// Delete User's Photo  Function 🧡🧡 - require AUTHENTICATION
+const deleteUserImagesFunc = async (req, res, next)=>{
+    try {
+        let success = false;
+        let document = await UserPhotos.findById(req.params.id);
+
+        // check can find by id or not
+        if(!document){
+            success = false;
+            return res.status(400).json({success, message:"Error: Not Found"});
+        }
+
+        // auth user or document user same or not
+        if(document.user.toString()!== req.user._id.toString()){
+            success = false;
+            return res.status(401).json({success, message:"Error: Not Allowed"});
+        }
+        
+        // finnally delete document
+        document = await UserPhotos.findByIdAndDelete(req.params.id, {new: true});
+        console.log(document);
+        res.status(200).json({success, message:"Document Delete Successfully"});
+    } catch (error) {
+        console.log(error);
+        success = false;
+        res.status(500).json({success, error: error.message})
+    }
+}
+
 // fileSizeformatter
 const fileSizeformatter = (bytes, decimal)=>{
     if(bytes===0){
@@ -103,5 +171,7 @@ const fileSizeformatter = (bytes, decimal)=>{
 module.exports = {
     uploadImageFunc,
     getAllImagesFunc,
-    getUserImagesFunc
+    getUserImagesFunc,
+    updateUserImagesFunc,
+    deleteUserImagesFunc
 }
