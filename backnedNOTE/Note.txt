@@ -86,3 +86,5 @@ STEP---------------------------------------------------------------
 
 20. add 'dpFiles' and 'about' schema in 'userModel' for USER PROFILE 🟢✔
 21. getAllUser - restApi - create 🟢✔
+
+22. 'userAbout update', 'user Name Update', 'user Dp upde' - REST API Created;

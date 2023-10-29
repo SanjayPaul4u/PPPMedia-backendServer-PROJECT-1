@@ -17,7 +17,7 @@ const uploadImageFunc = async(req, res, next)=>{
 
 
     try {
-        file_array = [],
+        let file_array = [];
 
         // PUSHING ALL IMAGE FILE IN 'FILE_ARRAY'
         req.files.forEach(element => {
