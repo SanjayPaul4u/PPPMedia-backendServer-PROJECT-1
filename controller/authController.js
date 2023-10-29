@@ -140,6 +140,28 @@ const getUserFunc = async(req, res, next)=>{
     }
 }
 
+// getAllUserFunc- require AUTHENTICATION
+
+const getAllUserFunc = async(req, res, next) =>{
+        let success = false;
+    try {
+        const allUserData =await Users.find().select("-password");
+        if(!allUserData){
+            success = false;
+            return res.json({success, message:"Not Found"})
+        }
+
+        success = true;
+        res.json({success, allUserData});
+    } catch (error) {
+        success = false;
+        console.log("get all user error****");
+        console.log(error);
+        res.status(500).json({success, error:error.message});
+    }
+}
+
+
 // logOutFunc- require AUTHENTICATION
 const logOutFunc = async(req, res, next) =>{
     try {
@@ -153,4 +175,4 @@ const logOutFunc = async(req, res, next) =>{
         res.status(500).json({success, error:error.message});
     }
 }
-module.exports = {signUpFunc, loginFunc, getUserFunc, logOutFunc};
+module.exports = {signUpFunc, loginFunc, getUserFunc, getAllUserFunc,logOutFunc};

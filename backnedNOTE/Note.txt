@@ -83,3 +83,6 @@ STEP---------------------------------------------------------------
 18. User Photo Delete function - REST API - 🟢✔
 
 19. refactored 🟢✔
+
+20. add 'dpFiles' and 'about' schema in 'userModel' for USER PROFILE 🟢✔
+21. getAllUser - restApi - create 🟢✔

@@ -29,6 +29,13 @@ const userSchema = new mongoose.Schema({
     confirmPassword: {
         type: String,
         require: true
+    },
+    dpFiles: [Object],
+    about: {
+        type: String,
+        minLength: [5, "Minimum about should be 5"],
+        maxLength: [50, "Minimum age should be 50"],
+        default: "Set About Section"
     }
 
 }, {timestamps: true});

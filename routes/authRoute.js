@@ -1,6 +1,6 @@
 const express  = require('express');
 const { body, validationResult } = require('express-validator');
-const {signUpFunc, loginFunc, getUserFunc, logOutFunc} = require("../controller/authController");
+const {signUpFunc, loginFunc, getUserFunc, getAllUserFunc, logOutFunc} = require("../controller/authController");
 const fetchUser = require("../middleware/fetchUser");
 const cookieParser = require("cookie-parser");
 
@@ -31,7 +31,10 @@ router.post("/login",[
 // ROUTE 3: GET - /api/auth/getuser (ATHENTICATION REQUIRE)
 router.get("/getuser", fetchUser, getUserFunc);
 
-// ROUTE 3: GET - /api/auth/logout (ATHENTICATION REQUIRE)
+// ROUTE 3: GET - /api/auth/getalluser(ATHENTICATION REQUIRE)
+router.get("/getalluser", fetchUser, getAllUserFunc);
+
+// ROUTE 4: GET - /api/auth/logout (ATHENTICATION REQUIRE)
 router.get("/logout", fetchUser, logOutFunc);
 
 
