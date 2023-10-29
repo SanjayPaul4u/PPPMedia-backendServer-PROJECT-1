@@ -80,4 +80,6 @@ STEP------------------------------------------------------------
 STEP--------------------------------------------------------------- 
 
 17. User Photo Update function - REST API - 🟢✔
-17. User Photo Delete function - REST API - 🟢✔
+18. User Photo Delete function - REST API - 🟢✔
+
+19. refactored 🟢✔

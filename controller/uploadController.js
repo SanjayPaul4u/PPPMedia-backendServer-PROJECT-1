@@ -119,7 +119,7 @@ const updateUserImagesFunc = async(req, res, next)=>{
         document = await UserPhotos.findByIdAndUpdate(req.params.id, {$set: newTitle}, {new: true})
 
         success = true;
-        res.status(201).json({success, document})
+        res.status(201).json({success,  message:"Updated User Photo's Title Successfully"})
     } catch (error) {
         console.log(error);
         success = false;
@@ -148,7 +148,7 @@ const deleteUserImagesFunc = async (req, res, next)=>{
         
         // finnally delete document
         document = await UserPhotos.findByIdAndDelete(req.params.id, {new: true});
-        console.log(document);
+        // console.log(document);
         res.status(200).json({success, message:"Document Delete Successfully"});
     } catch (error) {
         console.log(error);
