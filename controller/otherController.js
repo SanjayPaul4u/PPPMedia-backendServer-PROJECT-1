@@ -2,8 +2,10 @@ const Users = require("../models/userModel");
 const fs  = require("fs");
 
 
-//  USER ABOUT FUNCTION
-const UpdateUserABOUTFunc = async(req, res, next) =>{
+
+
+// Update USER NAME and ABOUT FUNCTION
+const UpdateUserNAMEnABOUTFunc = async(req, res, next) =>{
     try {
         let success = false;
         const id  = req.user._id;
@@ -14,56 +16,23 @@ const UpdateUserABOUTFunc = async(req, res, next) =>{
             success = false;
             return res.status(400).json({success, message:"Not Found"})
         }
-
-        const {about} = req.body;
-        const newAbout = {};
-        // if User give "about" in body, 
-        if (about){
-            newAbout.about = about;
-        }
-
-        // FINALLY UPDATE "USER ABOUT"
-        console.log(newAbout);
-        user_data = await Users.findByIdAndUpdate(req.user._id, {$set: newAbout}, {new: true})
-
-
-        success = true;
-        res.status(200).json({success, user_data})
-
-    } catch (error) {
-        success = false;
-        console.log("UpdateUserABOUTFunc error****");
-        console.log(error);
-        res.status(500).json({success, error: error.message});
-    }
-}
-
-// USER NAME FUNCTION
-const UpdateUserNAMEFunc = async(req, res, next) =>{
-    try {
-        let success = false;
-        const id  = req.user._id;
-        let user_data = await Users.findById(id).select("-password");
-
-        // USER DATA IS FINDED OR NOT
-        if(!user_data){
-            success = false;
-            return res.status(400).json({success, message:"Not Found"})
-        }
-        const {name} = req.body;
-        const newName = {};
-        // if User give "about" in body, 
+        const {name, about} = req.body;
+        const newNameandAbout = {};
+        // if User give "name" and "about" in body, 
         if (name){
-            newName.name = name;
+            newNameandAbout.name = name;
+        }
+        if(about){
+            newNameandAbout.about = about;
         }
         // FINALLY UPDATE "USER ABOUT"
-        user_data = await Users.findByIdAndUpdate(req.user._id, {$set: newName}, {new: true})
+        user_data = await Users.findByIdAndUpdate(req.user._id, {$set: newNameandAbout}, {new: true})
         success = true;
         res.status(200).json({success, user_data})
 
     } catch (error) {
         success = false;
-        console.log("UpdateUserNAMEFunc error****");
+        console.log("UpdateUserNAMEnABOUTFunc error****");
         console.log(error);
         res.status(500).json({success, error: error.message});
     }
@@ -126,7 +95,6 @@ const fileSizeformatter = (bytes, decimal)=>{
     return parseFloat((bytes/ Math.pow(1000, index)).toFixed(dm)) +' '+sizes[index];
 }
 module.exports = {
-    UpdateUserABOUTFunc,
-    UpdateUserNAMEFunc,
+    UpdateUserNAMEnABOUTFunc,
     UpdateDPFunc
 }
