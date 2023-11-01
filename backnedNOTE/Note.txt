@@ -90,3 +90,5 @@ STEP---------------------------------------------------------------
 22. 'userAbout update', 'user Name Update', 'user Dp upde' - REST API Created;
 
 23. router.use(cookieParser()); error Refactored 🟢✔
+
+24: Liked REST API CREATE 🟢✔

@@ -1,5 +1,6 @@
 const Users = require("../models/userModel");
 const fs  = require("fs");
+const UserPhotos = require("../models/multiplePhotosModel");
 
 
 
@@ -83,6 +84,71 @@ const UpdateDPFunc = async(req, res, next) =>{
     }
 }
 
+// LIKE PHOTO FUNCTION
+const LikePhotoFunc = async(req, res, next) =>{
+    try {
+        let success = false;
+        const user_id = req.user._id;
+        const user_email = req.user.email;
+        const photo_id = req.params.id; 
+        const photo_data = await UserPhotos.findById(photo_id).select("-files");
+
+        // IF PHOTO DATE NOT FOUND
+        if(!photo_data){
+            success = true;
+            res.status(400).json({success, message:"Error: Not Found"})
+        }
+        // NEW LIKES ARRAY CREATE;
+        var newLikesArr = photo_data.likes;
+        let message = "";
+        // console.log(photo_data.likes.length);
+        
+        // -------------------MAIN METHOD OF LIKE -so simple-----------------------
+        if(photo_data.likes.length===0){
+            newLikesArr.push(user_email);
+            message = "Liked";
+            success = true;
+        }else{
+            let findUser = false;
+            for (let i = 0; i < photo_data.likes.length; i++) {
+                const element = photo_data.likes[i];
+                
+                // if already liked then ----> dislike
+                if(element===user_email){
+                    console.log("element===user_email");
+                    newLikesArr = newLikesArr.filter((e)=>{
+                        findUser = true;
+                        success = true;
+                        message = "Unliked";
+                        return e!==user_email//dislike
+                    })
+                    break;
+                }
+            }
+            
+            // if NOt liked then ----> like
+            if(findUser!==true){
+                newLikesArr.push(user_email);
+                message = "Liked";
+                success = true;
+            }
+        }
+        
+        // FINALLY UPDATE
+        const update_photo_data = await UserPhotos.findByIdAndUpdate(photo_id, {$set: {likes:newLikesArr}}, {new: true}).select("-files")
+        
+        
+        // res.status(500).json({success, update_photo_data});
+        res.status(500).json({success, message: message});
+    } catch (error) {
+        success = false;
+        console.log("LikePhotoFunc Error******");
+        console.log(error);
+        res.status(500).json({success, error: error.message});
+    }
+}
+
+
 // fileSizeformatter
 const fileSizeformatter = (bytes, decimal)=>{
     if(bytes===0){
@@ -96,5 +162,6 @@ const fileSizeformatter = (bytes, decimal)=>{
 }
 module.exports = {
     UpdateUserNAMEnABOUTFunc,
-    UpdateDPFunc
+    UpdateDPFunc,
+    LikePhotoFunc
 }
