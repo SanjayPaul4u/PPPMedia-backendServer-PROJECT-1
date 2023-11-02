@@ -147,8 +147,50 @@ const LikePhotoFunc = async(req, res, next) =>{
         res.status(500).json({success, error: error.message});
     }
 }
+//getUserByEmail
+const getUserByEmail = async (req, res, next) =>{
+    try {
+        let success = false;
+        const email = req.params.email;
+        const userData = await Users.findOne({email: email}).select("-password");
 
+        // if not found
+        if(!userData){
+            return res.status(400).json({success, message:"error: Not Found"});
+        }
 
+        res.status(200).json({success, userData});              
+    } catch (error) {
+        success = false;
+        console.log("getUserByEmail Error******");
+        console.log(error);
+        res.status(500).json({success, error: error.message});
+    }
+}
+
+// Get Photos By Id
+const getPhotosByIdFunc = async(req, res, next) =>{
+    try {
+        let success = false;
+        const id = req.params.id;
+        console.log(id);
+        const userPhotos = await UserPhotos.find({user: id});
+        console.log(userPhotos);
+        if(!userPhotos){
+            success = false;
+            res.status(400).json({success, message:"Not Found123"});
+
+        }
+        success = true;
+        res.status(200).json({success, userPhotos});
+        
+    } catch (error) {
+        success =false;
+        console.log("getPhotosByIdFunc error******");
+        console.log(error);
+        res.status(500).json({success, error:error.message})
+    }
+}
 // fileSizeformatter
 const fileSizeformatter = (bytes, decimal)=>{
     if(bytes===0){
@@ -163,5 +205,7 @@ const fileSizeformatter = (bytes, decimal)=>{
 module.exports = {
     UpdateUserNAMEnABOUTFunc,
     UpdateDPFunc,
-    LikePhotoFunc
+    LikePhotoFunc,
+    getUserByEmail,
+    getPhotosByIdFunc
 }
