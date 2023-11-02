@@ -115,7 +115,7 @@ const LikePhotoFunc = async(req, res, next) =>{
                 
                 // if already liked then ----> dislike
                 if(element===user_email){
-                    console.log("element===user_email");
+                    // console.log("element===user_email");
                     newLikesArr = newLikesArr.filter((e)=>{
                         findUser = true;
                         success = true;
@@ -139,7 +139,7 @@ const LikePhotoFunc = async(req, res, next) =>{
         
         
         // res.status(500).json({success, update_photo_data});
-        res.status(500).json({success, message: message});
+        res.status(200).json({success, message: message});
     } catch (error) {
         success = false;
         console.log("LikePhotoFunc Error******");

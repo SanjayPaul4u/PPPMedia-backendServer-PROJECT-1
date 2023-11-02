@@ -7,8 +7,8 @@ const jwt_secret = "thisissecrettextforjsonwebtoken";
 const fetchUser = async(req, res, next)=>{
     let success = false;
     // const token = req.header("auth-token");// old token from header
-    const token =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU0MDlkNzYyYTg3YmQ0NjhlOWE5MjcwIn0sImlhdCI6MTY5ODczMzQzMH0.7RKoFrdAvXQgipbVFA_zqvfWV6lo4aRVs3f7dwNokJE"
-    // const token =  req.cookies.jwt; // new token from cookies
+    // const token =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU0MDlkNzYyYTg3YmQ0NjhlOWE5MjcwIn0sImlhdCI6MTY5ODczMzQzMH0.7RKoFrdAvXQgipbVFA_zqvfWV6lo4aRVs3f7dwNokJE"
+    const token =  req.cookies.jwt; // new token from cookies
 
     if(!token){
         success = false;
