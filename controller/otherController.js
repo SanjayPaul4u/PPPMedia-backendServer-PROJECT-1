@@ -175,7 +175,7 @@ const getPhotosByIdFunc = async(req, res, next) =>{
         const id = req.params.id;
         console.log(id);
         const userPhotos = await UserPhotos.find({user: id});
-        console.log(userPhotos);
+        // console.log(userPhotos);
         if(!userPhotos){
             success = false;
             res.status(400).json({success, message:"Not Found123"});
