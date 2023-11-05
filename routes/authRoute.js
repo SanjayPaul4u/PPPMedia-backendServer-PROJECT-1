@@ -13,7 +13,7 @@ router.use(cookieParser());
 // ROUTE 1: POST - /api/auth/signup (NOT ATHENTICATION REQUIRE)
 router.post("/signup",[
     body("name", "Minimum Length of name should be 3*****").isLength({min:3}),
-    body("name", "Maximum Length of name should be 20*****").isLength({max:20}),
+    body("name", "Maximum Length of name should be 25*****").isLength({max:25}),
     body("email", "Enter valid email*****").isEmail(),
     body("password", "Minimum Length should be 3*****").isLength({min:3}),
     body("password", "Maximum Length should be 20*****").isLength({max:20}),
