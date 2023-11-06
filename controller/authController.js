@@ -2,7 +2,9 @@ const Users = require("../models/userModel");
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-const jwt_secret = "thisissecrettextforjsonwebtoken";
+require('dotenv').config()
+
+const jwt_secret = process.env.SECRET_KEY;
 
 // signUpFunc
 // _______________
@@ -13,7 +15,7 @@ const signUpFunc = async(req, res, next)=>{
     const result = validationResult(req);
     if (!result.isEmpty()) {
         success = false;
-        return res.status(400).json({success, error: result.array()});
+        return res.status(400).json({success, message: "Invalid Creadentials", error: result.array()});
     }
     
     try {
@@ -21,7 +23,7 @@ const signUpFunc = async(req, res, next)=>{
         const emailCheck = await Users.findOne({email: req.body.email});
         if(emailCheck){
             success = false;
-            return res.status(400).json({success, error: "A User with this Email already exists****"});
+            return res.status(400).json({success, message:"A User with this Email already exists",error: "Email Match"});
         }
 
         // if both password same
@@ -42,7 +44,8 @@ const signUpFunc = async(req, res, next)=>{
 
         // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
         res.cookie("jwt", mainToken, {
-            expires: new Date(Date.now()+1800000),// 10 minute
+            // expires: new Date(Date.now()+1800000),// 10 minute
+            expires: new Date(Date.now()+(86400000)),// 1 day 86400000
             httpOnly: true
         })  
        
@@ -50,17 +53,16 @@ const signUpFunc = async(req, res, next)=>{
         const savedData = await signup_data.save();
                 
         success = true;
-        console.log("Account Created successfully***********");
-        res.status(201).json({success, message:"Account Created successfully***", token:mainToken,savedData});
+        res.status(201).json({success, message:"Account Created successfully", token:mainToken,savedData});
         }else{
             success = false;
-            res.status(400).json({success, error: "Your both passwords are not matched"});
+            res.status(400).json({success, message: "Your both passwords are not matched", error:"Password Not Match"});
         }
     } catch (error) {
         success = false;
         console.log("sign up error****");
         console.log(error);
-        res.status(500).json({success, error:error.message});
+        res.status(500).json({success, message: "sign up error***", error:error.message});
     }
 }
 
@@ -98,7 +100,8 @@ const loginFunc = async(req, res, next)=>{
 
             // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
             res.cookie('jwt', mainToken, {
-                expires: new Date(Date.now() + 1800000),// 10 minute
+                // expires: new Date(Date.now() + 1800000),// 10 minute
+                expires: new Date(Date.now() + 86400000),// 1 day
                 httpOnly:true
             })
 

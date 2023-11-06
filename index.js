@@ -4,6 +4,7 @@ const uploadRouter = require('./routes/uploadRoute');
 const otherRouter = require('./routes/otherRoute');
 const cors = require('cors');
 require('./database');
+require('dotenv').config();
 
 // CREATE EXPRESS APP
 const app = express();

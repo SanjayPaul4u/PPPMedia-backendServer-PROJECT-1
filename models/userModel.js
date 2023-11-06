@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+require('dotenv').config()
 
 // DEFINE
-const jwt_secret = "thisissecrettextforjsonwebtoken";
+const jwt_secret = process.env.SECRET_KEY;
 
 // SCHEMA CREATE
 const userSchema = new mongoose.Schema({
