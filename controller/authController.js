@@ -43,11 +43,11 @@ const signUpFunc = async(req, res, next)=>{
         const mainToken = await signup_data.createToken();
 
         // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
-        res.cookie("jwt", mainToken, {
-            // expires: new Date(Date.now()+1800000),// 10 minute
-            expires: new Date(Date.now()+(86400000)),// 1 day 86400000
-            httpOnly: true
-        })  
+        // res.cookie("jwt", mainToken, {
+        //     // expires: new Date(Date.now()+1800000),// 10 minute
+        //     expires: new Date(Date.now()+(86400000)),// 1 day 86400000
+        //     httpOnly: true
+        // })  
        
 
         const savedData = await signup_data.save();
@@ -98,12 +98,13 @@ const loginFunc = async(req, res, next)=>{
             // generate toke by userSchema.methods.createToken
             const mainToken = await email_check.createToken(); // "email_chck" have user's data
 
+            
             // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
-            res.cookie('jwt', mainToken, {
-                // expires: new Date(Date.now() + 1800000),// 10 minute
-                expires: new Date(Date.now() + 86400000),// 1 day
-                httpOnly:true
-            })
+            // res.cookie('jwt', mainToken, {
+            //     // expires: new Date(Date.now() + 1800000),// 10 minute
+            //     expires: new Date(Date.now() + 86400000),// 1 day
+            //     httpOnly:true
+            // })
 
             success = true;
             res.status(200).json({success, message: "logged In Success fully***", token:mainToken, userData : email_check});
