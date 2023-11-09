@@ -45,8 +45,8 @@ const signUpFunc = async(req, res, next)=>{
         // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
         res.cookie("jwt", mainToken, {
             // expires: new Date(Date.now()+1800000),// 10 minute
-            expires: new Date(Date.now()+(86400000)),// 1 day 86400000
-            httpOnly: true
+	    expires: new Date(Date.now()+(86400000)),// 1 day 86400000
+            httpsOnly: true
         })  
        
 
@@ -101,8 +101,8 @@ const loginFunc = async(req, res, next)=>{
             // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
             res.cookie('jwt', mainToken, {
                 // expires: new Date(Date.now() + 1800000),// 10 minute
-                expires: new Date(Date.now() + 86400000),// 1 day
-                httpOnly:true
+		expires: new Date(Date.now() + 86400000),// 1 day
+                httpsOnly:true
             })
 
             success = true;
