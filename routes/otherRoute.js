@@ -10,18 +10,18 @@ router.use(cookieParser());
 
 
 // ROUTE 1: PATCH - /api/other/updateusernameabout (ATHENTICATION REQUIRE)
-router.patch("/updateusernameabout", fetchUser, UpdateUserNAMEnABOUTFunc);
+router.patch("/updateusernameabout/:token", fetchUser, UpdateUserNAMEnABOUTFunc);
 
 // ROUTE 2: PATCH - /api/other/updateuserdp (ATHENTICATION REQUIRE)
-router.patch("/updateuserdp",upload.single("file"), fetchUser, UpdateDPFunc);
+router.patch("/updateuserdp/:token",upload.single("file"), fetchUser, UpdateDPFunc);
 
 // ROUTE 3: PATCH - /api/other/images/likeimg (ATHENTICATION REQUIRE)
-router.patch("/images/likeimg/:id",fetchUser, LikePhotoFunc);
+router.patch("/images/likeimg/:id/:token",fetchUser, LikePhotoFunc);
 
 // ROUTE 4: PATCH - /api/other/images/getuserbyemail/:email (ATHENTICATION REQUIRE)
-router.get("/images/getuserbyemail/:email",fetchUser, getUserByEmail);
+router.get("/images/getuserbyemail/:email/:token",fetchUser, getUserByEmail);
 
 // ROUTE 4: PATCH - /api/other/images/getphotosbyid/:id (ATHENTICATION REQUIRE)
-router.get("/images/getphotosbyid/:id", fetchUser ,getPhotosByIdFunc);
+router.get("/images/getphotosbyid/:id/:token", fetchUser ,getPhotosByIdFunc);
 // EXPORT ROUTER
 module.exports = router;

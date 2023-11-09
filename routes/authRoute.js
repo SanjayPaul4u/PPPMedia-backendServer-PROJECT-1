@@ -29,13 +29,13 @@ router.post("/login",[
     ], loginFunc);
 
 // ROUTE 3: GET - /api/auth/getuser (ATHENTICATION REQUIRE)
-router.get("/getuser", fetchUser, getUserFunc);
+router.get("/getuser/:token", fetchUser, getUserFunc);
 
 // ROUTE 3: GET - /api/auth/getalluser(ATHENTICATION REQUIRE)
-router.get("/getalluser", fetchUser, getAllUserFunc);
+router.get("/getalluser/:token", fetchUser, getAllUserFunc);
 
 // ROUTE 4: GET - /api/auth/logout (ATHENTICATION REQUIRE)
-router.get("/logout", fetchUser, logOutFunc);
+router.get("/logout/:token", fetchUser, logOutFunc);
 
 
 
