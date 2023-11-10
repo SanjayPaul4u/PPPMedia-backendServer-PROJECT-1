@@ -43,20 +43,11 @@ const signUpFunc = async(req, res, next)=>{
         const mainToken = await signup_data.createToken();
 
         // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
-<<<<<<< HEAD
-        res.cookie("jwt", mainToken, {
-            // expires: new Date(Date.now()+1800000),// 10 minute
-	    expires: new Date(Date.now()+(86400000)),// 1 day 86400000
-            httpsOnly: true
-        })  
-=======
         // res.cookie("jwt", mainToken, {
         //     // expires: new Date(Date.now()+1800000),// 10 minute
-        //     expires: new Date(Date.now()+(86400000)),// 1 day 86400000
-        //     httpOnly: true
+	    // expires: new Date(Date.now()+(86400000)),// 1 day 86400000
+        //     httpsOnly: true
         // })  
->>>>>>> ad1f893767efafe02395fb38f6620d1ee6edb2d1
-       
 
         const savedData = await signup_data.save();
                 
@@ -108,19 +99,11 @@ const loginFunc = async(req, res, next)=>{
 
             
             // Store Token in Cookies - IN OUR APP IT IS OPTIONAL***
-<<<<<<< HEAD
-            res.cookie('jwt', mainToken, {
-                // expires: new Date(Date.now() + 1800000),// 10 minute
-		expires: new Date(Date.now() + 86400000),// 1 day
-                httpsOnly:true
-            })
-=======
             // res.cookie('jwt', mainToken, {
             //     // expires: new Date(Date.now() + 1800000),// 10 minute
-            //     expires: new Date(Date.now() + 86400000),// 1 day
-            //     httpOnly:true
+		    //     expires: new Date(Date.now() + 86400000),// 1 day
+            //     httpsOnly:true
             // })
->>>>>>> ad1f893767efafe02395fb38f6620d1ee6edb2d1
 
             success = true;
             res.status(200).json({success, message: "logged In Success fully***", token:mainToken, userData : email_check});
