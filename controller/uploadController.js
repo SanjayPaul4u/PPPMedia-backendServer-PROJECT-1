@@ -59,10 +59,13 @@ const uploadImageFunc = async(req, res, next)=>{
 const getAllImagesFunc = async(req, res, next)=>{
     let success = false;    
     try {
-        const all_Images =await UserPhotos.find().sort({createdAt: -1});
-        // console.log(all_Images);
+        const { page, contentSize  } = req.query;
+
+        const all_Images =await UserPhotos.find().sort({createdAt: -1}).limit(contentSize).skip(contentSize*(page-1));
+        const totalResult = await UserPhotos.countDocuments({});
+
         success = true;
-        res.status(200).json({success, all_Images});
+        res.status(200).json({success, totalResult, all_Images});
 
     } catch (error) {
         success = false;
